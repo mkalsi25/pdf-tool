@@ -2,8 +2,28 @@
 // const axios = require("axios");
 import axios from "axios";
 import cheerio from "cheerio";
-
+import fs from "fs";
+import path from "path";
 export default async function handler(req, res) {
+  const downloadFile = async (fileUrl, downloadFolder) => {
+    const fileName = path.basename(fileUrl);
+    const localFilePath = path.resolve(__dirname, downloadFolder, fileName);
+    try {
+      const response = await axios({
+        method: "GET",
+        url: fileUrl,
+        responseType: "stream",
+      });
+
+      const w = response.data.pipe(fs.createWriteStream(localFilePath));
+      w.on("finish", () => {
+        console.log("Successfully downloaded file!");
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   if (req.method === "GET") {
     await axios
       .get(
@@ -16,8 +36,16 @@ export default async function handler(req, res) {
         const title = $("title").first().text();
         $(".carouselList li").each((index, element) => {
           property.push({
-            src: $(element).find("img").attr("ng-src"),
+            src: $(element)
+              .find("img")
+              .attr("ng-src")
+              .replace("https://img00.rhimg.com/", "/"),
           });
+
+          downloadFile(
+            $(element).find("img").attr("ng-src"),
+            "../../../../public"
+          );
         });
         $(".houseDescription").each((index, element) => {
           description.push({
@@ -36,8 +64,15 @@ export default async function handler(req, res) {
       const title = $("title").first().text();
       $(".carouselList li").each((index, element) => {
         property.push({
-          src: $(element).find("img").attr("ng-src"),
+          src: $(element)
+            .find("img")
+            .attr("ng-src")
+            .replace("https://img00.rhimg.com/", "/"),
         });
+        downloadFile(
+          $(element).find("img").attr("ng-src"),
+          "../../../../public"
+        );
       });
       $(".houseDescription").each((index, element) => {
         description.push({
