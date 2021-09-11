@@ -13,14 +13,18 @@ export default function Index() {
     },
   });
   useEffect(() => {
-    axios.get("/api").then((res) => {
-      ReactDOM.render(
-        <PDFViewer style={styles.body}>
-          <Property data={res.data} />
-        </PDFViewer>,
-        document.getElementById("PDF")
-      );
-    });
+    axios
+      .get("/api/idealista", {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      })
+      .then((res) => {
+        ReactDOM.render(
+          <PDFViewer style={styles.body}>
+            <Property data={res.data} />
+          </PDFViewer>,
+          document.getElementById("PDF")
+        );
+      });
   });
   const handleChange = (e) => {
     updateFormData({
@@ -30,8 +34,8 @@ export default function Index() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api", { formData }).then((res) => {
-      // console.log(res.data);
+    axios.post("/api/idealista", { formData }).then((res) => {
+      //   console.log(res.data);
       ReactDOM.render(
         <PDFViewer style={styles.body}>
           <Property data={res.data} />
