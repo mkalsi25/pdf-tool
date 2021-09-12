@@ -53,5 +53,7 @@ export default function handler(req, res) {
         .status(200)
         .json({ name: title, image: property, details: description });
     });
+  } else if (req.method === "PATCH") {
+    res.status(200).json(req.body.data);
   }
 }

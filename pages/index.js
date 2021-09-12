@@ -4,6 +4,7 @@ import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
 import axios from "axios";
 import Seo from "../components/Seo";
+import Edit from "../components/Edit";
 export default function Index() {
   const [formData, updateFormData] = useState({});
   const styles = StyleSheet.create({
@@ -15,9 +16,12 @@ export default function Index() {
   useEffect(() => {
     axios.get("/api").then((res) => {
       ReactDOM.render(
-        <PDFViewer style={styles.body}>
-          <Property data={res.data} />
-        </PDFViewer>,
+        <div>
+          <Edit content={res.data} path="PDF" />
+          <PDFViewer style={styles.body}>
+            <Property data={res.data} />
+          </PDFViewer>
+        </div>,
         document.getElementById("PDF")
       );
     });
@@ -28,14 +32,18 @@ export default function Index() {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("/api", { formData }).then((res) => {
       // console.log(res.data);
       ReactDOM.render(
-        <PDFViewer style={styles.body}>
-          <Property data={res.data} />
-        </PDFViewer>,
+        <div>
+          <Edit content={res.data} path="UpdatedPDF" />
+          <PDFViewer style={styles.body}>
+            <Property data={res.data} />
+          </PDFViewer>
+        </div>,
         document.getElementById("UpdatedPDF")
       );
     });
@@ -78,12 +86,17 @@ export default function Index() {
           </form>
         </div>
       </div>
+
       <div className="grid gap-6">
-        <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
-          <div id="UpdatedPDF" />
+        <div>
+          <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
+            <div id="UpdatedPDF" />
+          </div>
         </div>
-        <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
-          <div id="PDF" />
+        <div>
+          <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
+            <div id="PDF" />
+          </div>
         </div>
       </div>
       <div className="bg-black p-6 mt-24 text-center uppercase text-xs tracking-[0.2em] text-white">
