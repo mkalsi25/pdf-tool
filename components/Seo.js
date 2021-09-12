@@ -5,7 +5,7 @@ export default function Seo({ title, description }) {
     <Head>
       {title && <title>{title}</title>}
       {description && <meta name="description" content={description} />}
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/logo.jpeg" />
     </Head>
   );
 }

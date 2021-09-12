@@ -151,7 +151,25 @@ const Property = ({ data }) => {
         </View>
         <View style={styles.wrapper}>
           {data.image.map((img, key) => {
-            return <Image key={key} style={styles.img} src={img.src} />;
+            return (
+              <Image
+                key={key}
+                style={styles.img}
+                cache={false}
+                allowDangerousPaths={true}
+                // src={img.src + `?noCache=anonymous`}
+                src={{
+                  method: "GET",
+                  uri: img.src,
+                  // headers: {
+                  //   // "Access-Control-Allow-Origin": "*",
+                  //   Pragma: "no-cache",
+                  //   "Cache-Control": "no-cache",
+                  //   crossOrigin: "anonymous",
+                  // },
+                }}
+              />
+            );
           })}
         </View>
         <View style={styles.footer}>

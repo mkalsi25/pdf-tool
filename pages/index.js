@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
@@ -13,19 +13,19 @@ export default function Index() {
       height: "100vh",
     },
   });
-  useEffect(() => {
-    axios.get("/api").then((res) => {
-      ReactDOM.render(
-        <div>
-          <Edit content={res.data} path="PDF" />
-          <PDFViewer style={styles.body}>
-            <Property data={res.data} />
-          </PDFViewer>
-        </div>,
-        document.getElementById("PDF")
-      );
-    });
-  });
+  // useEffect(() => {
+  //   axios.get("/api").then((res) => {
+  //     ReactDOM.render(
+  //       <div>
+  //         <Edit content={res.data} path="PDF" />
+  //         <PDFViewer style={styles.body}>
+  //           <Property data={res.data} />
+  //         </PDFViewer>
+  //       </div>,
+  //       document.getElementById("PDF")
+  //     );
+  //   });
+  // });
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -55,30 +55,32 @@ export default function Index() {
         title="PDF Generator"
         description="A PDF generator from data of web scraping. It's based on property belongs to Ibiza."
       />
-      <div className="h-[50vh] flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <div>
           <h1 className="text-4xl md:text-7xl font-bold">PDF Generator Tool</h1>
           <form
             onSubmit={handleSubmit}
-            className="grid gap-2 sm:gap-0 sm:flex items-center justify-center space-x-4 mt-6 "
+            className="grid grid-cols-2 gap-6 w-11/12  items-center mt-6 max-w-3xl mx-auto"
           >
-            <div>
-              <label htmlFor="url" className="sr-only">
+            <div className="grid gap-2  col-span-2">
+              <label htmlFor="url" className="text-xs">
                 Please Enter URL
               </label>
               <input
                 id="url"
                 type="url"
+                required
                 name="url"
                 onChange={handleChange}
                 placeholder="https://"
-                className="px-4 py-2 outline-none focus:outline-none rounded bg-white w-full lg:w-80 filter drop-shadow-md"
+                className="px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md"
               />
             </div>
+
             <div>
               <button
                 type="submit"
-                className="px-8 py-2 rounded bg-black text-white outline-none focus:outline"
+                className="px-8 py-2 rounded w-full bg-black text-white outline-none focus:outline"
               >
                 Generate Now!
               </button>
