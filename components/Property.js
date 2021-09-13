@@ -113,9 +113,77 @@ Font.register({
 });
 
 // Create Document Component
-const Property = ({ data }) => {
+const Property = ({ data, generate }) => {
   // console.log(data);
   const Year = new Date().getFullYear();
+
+  if (generate) {
+    return (
+      <Document>
+        <Page size="LETTER" style={styles.frontpage}>
+          <Image src="/white.jpeg" style={styles.frontlogo} />
+        </Page>
+        <Page size="LETTER" style={styles.page}>
+          <View style={styles.section}>
+            <View style={styles.header}>
+              <Image src="/logo.jpeg" style={styles.logo} />
+              <View style={styles.intro}>
+                <Text style={styles.name}> Kelly Osorio Oviedo</Text>
+                <Text style={styles.detail}> Real Estate Manager</Text>
+                <Text style={styles.detail}> The Orchid Group Properties</Text>
+                <Link src="tel:+34 610 996 112" style={styles.detail}>
+                  {" "}
+                  +34 610 996 112
+                </Link>
+              </View>
+            </View>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.gallery}> Name: </Text>
+            <Text style={styles.title}>{generate.title}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.gallery}> Details: </Text>
+            {generate.description && (
+              <Text style={styles.description}>{generate.description}</Text>
+            )}
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.gallery}>Gallery:</Text>
+          </View>
+          <View style={styles.wrapper}>
+            {Array.from(generate.image).map((img, key) => {
+              return (
+                <Image
+                  key={key}
+                  style={styles.img}
+                  cache={false}
+                  allowDangerousPaths={true}
+                  // src={img.src + `?noCache=anonymous`}
+                  src={{
+                    method: "GET",
+                    uri: URL.createObjectURL(img),
+                    // headers: {
+                    //   // "Access-Control-Allow-Origin": "*",
+                    //   Pragma: "no-cache",
+                    //   "Cache-Control": "no-cache",
+                    //   crossOrigin: "anonymous",
+                    // },
+                  }}
+                />
+              );
+            })}
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.detail}>
+              © {Year + " "} The Orchid Group Properties. All rights reserved.
+            </Text>
+          </View>
+        </Page>
+      </Document>
+    );
+  }
+
   return (
     <Document>
       <Page size="LETTER" style={styles.frontpage}>
