@@ -4,7 +4,10 @@ export default async function handler(req, res) {
   function run() {
     return new Promise(async (resolve, reject) => {
       try {
-        const browser = await puppeteer.launch({ headless: false }); //browser initiate
+        const browser = await puppeteer.launch({
+          headless: false,
+          args: ["--headless"],
+        }); //browser initiate
         const page = await browser.newPage(); // opening a new blank page
         await page.goto(
           "https://www.casafari.com/home-sale/property-" + req.body.formData.id,
