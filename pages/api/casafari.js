@@ -17,8 +17,8 @@ export default async function handler(req, res) {
         ); // navigate to url and wait until page loads completely
 
         await page.waitForSelector(".authentication-form");
-        await page.type("#email", "danny@villasofibiza.com", { delay: 100 });
-        await page.type("#password", "Letmein123*", {
+        await page.type("#email", process.env.NEXT_AUTH_EMAIL, { delay: 100 });
+        await page.type("#password", process.env.NEXT_AUTH_PASSWORD, {
           delay: 100,
         });
         await Promise.all([
