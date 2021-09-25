@@ -27,7 +27,6 @@ export default async function handler(req, res) {
           "https://www.casafari.com/home-sale/property-" + req.body.formData.id,
           {
             waitUntil: "domcontentloaded",
-            timeout: 0,
           }
         ); // navigate to url and wait until page loads completely
 
@@ -40,7 +39,7 @@ export default async function handler(req, res) {
           page.click(
             "#app > div > div.authentication-form > div > div > form > div.registration-form__row.registration-form__row_btn-holder > button"
           ),
-          page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 0 }),
+          page.waitForNavigation({ waitUntil: "domcontentloaded" }),
         ]);
 
         await page.waitForSelector(".estate-details-wrapper");
