@@ -1,17 +1,11 @@
-const puppeteer = require("puppeteer-core");
-const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer");
+// const chromium = require("chrome-aws-lambda");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const browser = await puppeteer.launch({
-        // Required
-        executablePath: await chromium.executablePath,
-
-        // Optional
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        headless: chromium.headless,
+        headless: false,
       }); //browser initiate
       const page = await browser.newPage(); // opening a new blank page'
       // await page.setDefaultNavigationTimeout(0);
