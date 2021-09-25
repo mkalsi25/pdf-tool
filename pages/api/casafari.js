@@ -1,13 +1,22 @@
 // const puppeteer = require("puppeteer");
-// import chromium from "chrome-aws-lambda";
-const playwright = require("playwright");
+
+// running on the Vercel platform.
+const chrome = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer-core");
+
+// running locally.
+// const puppeteer = require("puppeteer");
+
 export default async function handler(req, res) {
   function run() {
     return new Promise(async (resolve, reject) => {
       try {
-        const browser = await playwright.chromium.launch({
-          headless: false,
-          args: ["--headless"],
+        const browser = await puppeteer.launch({
+          args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+          defaultViewport: chrome.defaultViewport,
+          executablePath: await chrome.executablePath,
+          headless: true,
+          ignoreHTTPSErrors: true,
         }); //browser initiate
         const page = await browser.newPage(); // opening a new blank page
         await page.goto(
