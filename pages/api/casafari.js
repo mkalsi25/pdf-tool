@@ -1,11 +1,14 @@
-// const puppeteer = require("puppeteer");
-
-// running on the Vercel platform.
 const chrome = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer-core");
-
-// running locally.
+let puppeteer;
 // const puppeteer = require("puppeteer");
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  // running on the Vercel platform.
+
+  puppeteer = require("puppeteer-core");
+} else {
+  // running locally.
+  puppeteer = require("puppeteer");
+}
 
 export default async function handler(req, res) {
   function run() {
