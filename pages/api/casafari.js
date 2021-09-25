@@ -22,7 +22,7 @@ export default async function handler(req, res) {
           ignoreHTTPSErrors: true,
         }); //browser initiate
         const page = await browser.newPage(); // opening a new blank page'
-        await page.setDefaultNavigationTimeout(60000);
+        await page.setDefaultNavigationTimeout(0);
         await page.goto(
           "https://www.casafari.com/home-sale/property-" + req.body.formData.id,
           {
