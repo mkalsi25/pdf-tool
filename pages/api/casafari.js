@@ -1,14 +1,27 @@
-const puppeteer = require("puppeteer");
-// const chromium = require("chrome-aws-lambda");
+const chrome = require("chrome-aws-lambda");
+let puppeteer;
+// const puppeteer = require("puppeteer");
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  // running on the Vercel platform.
+
+  puppeteer = require("puppeteer-core");
+} else {
+  // running locally.
+  puppeteer = require("puppeteer");
+}
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const browser = await puppeteer.launch({
-        headless: false,
+        args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+        defaultViewport: chrome.defaultViewport,
+        executablePath: await chrome.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true,
       }); //browser initiate
       const page = await browser.newPage(); // opening a new blank page'
-      // await page.setDefaultNavigationTimeout(0);
+      await page.setDefaultNavigationTimeout(0);
       await page.goto(
         "https://www.casafari.com/home-sale/property-" + req.body.formData.id,
         {
