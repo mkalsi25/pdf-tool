@@ -4,7 +4,6 @@ import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/CasafariProperty";
 import axios from "axios";
 import Seo from "../components/Seo";
-import Edit from "../components/Edit";
 export default function Index() {
   const [formData, updateFormData] = useState({});
   const styles = StyleSheet.create({
