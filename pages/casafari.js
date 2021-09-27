@@ -4,6 +4,8 @@ import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/CasafariProperty";
 import axios from "axios";
 import Seo from "../components/Seo";
+import Layout from "../components/Layout";
+
 export default function Index() {
   const [formData, updateFormData] = useState({});
   const styles = StyleSheet.create({
@@ -76,14 +78,16 @@ export default function Index() {
   };
 
   return (
-    <div>
+    <Layout>
       <Seo
         title="PDF Generator"
         description="A PDF generator from data of web scraping. It's based on property belongs to Ibiza."
       />
       <div className="h-screen flex items-center justify-center">
         <div>
-          <h1 className="text-4xl md:text-7xl font-bold">PDF Generator Tool</h1>
+          <h1 className="text-4xl md:text-7xl font-bold text-center max-w-3xl mx-auto">
+            PDF Generator Tool for Casafari
+          </h1>
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-2 gap-6 w-11/12  items-center mt-6 max-w-3xl mx-auto"
@@ -127,9 +131,6 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="bg-black p-6 mt-24 text-center uppercase text-xs tracking-[0.2em] text-white">
-        <strong>Tool Developed by: Danny Waite & Team.</strong>
-      </div>
-    </div>
+    </Layout>
   );
 }

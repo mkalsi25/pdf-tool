@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import ReactDOM from "react-dom";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
+import Layout from "../components/Layout";
+
 // import axios from "axios";
 import Seo from "../components/Seo";
 // import Edit from "../components/Edit";
@@ -37,14 +39,16 @@ export default function Generate() {
   };
 
   return (
-    <div>
+    <Layout>
       <Seo
         title="PDF Generator"
         description="A PDF generator from data of web scraping. It's based on property belongs to Ibiza."
       />
       <div className="h-screen flex items-center justify-center">
         <div>
-          <h1 className="text-4xl md:text-7xl font-bold">PDF Generator Tool</h1>
+          <h1 className="text-4xl md:text-7xl font-bold text-center max-w-3xl mx-auto">
+            Manual PDF Generator Tool
+          </h1>
           <form
             onSubmit={handleSubmit(Submit)}
             className="grid grid-cols-2 gap-6 w-11/12  items-center mt-6 max-w-3xl mx-auto"
@@ -106,9 +110,6 @@ export default function Generate() {
           <div id="PDF" />
         </div>
       </div>
-      <div className="bg-black p-6 mt-24 text-center uppercase text-xs tracking-[0.2em] text-white">
-        <strong>Tool Developed by: Danny Waite & Team.</strong>
-      </div>
-    </div>
+    </Layout>
   );
 }
