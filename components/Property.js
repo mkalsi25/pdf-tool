@@ -210,8 +210,8 @@ const Property = ({ data, generate }) => {
         </View>
         <View style={styles.section}>
           <Text style={styles.gallery}> Details: </Text>
-          {data.details[0].text && (
-            <Text style={styles.description}>{data.details[0].text}</Text>
+          {data.details && (
+            <Text style={styles.description}>{data?.details[0]?.text}</Text>
           )}
         </View>
         <View style={styles.section}>
@@ -227,14 +227,9 @@ const Property = ({ data, generate }) => {
                 allowDangerousPaths={true}
                 // src={img.src + `?noCache=anonymous`}
                 src={{
+                  uri: "https://cors.bridged.cc/" + img.src,
                   method: "GET",
-                  uri: img.src,
-                  // headers: {
-                  //   // "Access-Control-Allow-Origin": "*",
-                  //   Pragma: "no-cache",
-                  //   "Cache-Control": "no-cache",
-                  //   crossOrigin: "anonymous",
-                  // },
+                  headers: { "Cache-Control": "no-cache" },
                 }}
               />
             );

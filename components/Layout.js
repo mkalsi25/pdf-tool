@@ -37,6 +37,6 @@ export default function Layout({ children }) {
 const menu = [
   { title: "Kyero", route: "/" },
   { title: "Casafari", route: "/casafari" },
-  { title: "Idealista", route: "/idealista" },
+  // { title: "Idealista", route: "/idealista" },
   { title: "Manual Generator", route: "/generate" },
 ];

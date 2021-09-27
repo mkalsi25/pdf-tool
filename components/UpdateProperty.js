@@ -151,7 +151,17 @@ const Property = ({ data }) => {
         </View>
         <View style={styles.wrapper}>
           {data.images.map((img, key) => {
-            return <Image key={key} style={styles.img} src={img.src} />;
+            return (
+              <Image
+                key={key}
+                style={styles.img}
+                src={{
+                  uri: "https://cors.bridged.cc/" + img.src,
+                  method: "GET",
+                  headers: { "Cache-Control": "no-cache" },
+                }}
+              />
+            );
           })}
         </View>
         <View style={styles.footer}>
