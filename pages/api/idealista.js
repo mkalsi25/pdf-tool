@@ -5,6 +5,7 @@ import axios from "axios";
 import path from "path";
 export default async function handler(req, res) {
   if (req.method === "GET") {
+    return res.status(202).json("404 Not found");
   } else if (req.method === "POST") {
     try {
       await axios

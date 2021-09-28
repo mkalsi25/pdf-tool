@@ -11,7 +11,9 @@ if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
 }
 
 export default async function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    return res.status(202).json("404 Not found");
+  } else if (req.method === "POST") {
     try {
       const browser = await puppeteer.launch({
         args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
@@ -63,8 +65,9 @@ export default async function handler(req, res) {
             .innerHTML,
           baths: document.querySelector("#seller-details tbody tr .col6")
             .innerHTML,
-          content: document.querySelector("#seller-details tbody tr .col8")
-            .innerHTML,
+          plot: document.querySelector(
+            "#seller-details > div > div > table > tbody > tr > td:nth-child(8)"
+          ).innerHTML,
           surface: document.querySelector("#seller-details tbody tr .col7")
             .innerHTML,
 

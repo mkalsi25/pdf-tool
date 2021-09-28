@@ -178,16 +178,16 @@ const Property = ({ data }) => {
             <Text style={styles.title}>{data[0].surface}</Text>
           </View>
           <View style={styles.section2}>
+            <Text style={styles.gallery}> Plot: </Text>
+            <Text style={styles.title}>{data[0].plot}</Text>
+          </View>
+          <View style={styles.section2}>
             <Text style={styles.gallery}> Rooms: </Text>
             <Text style={styles.title}>{data[0].rooms}</Text>
           </View>
           <View style={styles.section2}>
             <Text style={styles.gallery}> Sale Status: </Text>
             <Text style={styles.title}>{data[0].status}</Text>
-          </View>
-          <View style={styles.section2}>
-            <Text style={styles.gallery}> Connect: </Text>
-            <Text style={styles.title}>{data[0].content}</Text>
           </View>
         </View>
         <View style={styles.wrap}>

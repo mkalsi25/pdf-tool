@@ -3,7 +3,7 @@ const axios = require("axios");
 
 export default function handler(req, res) {
   if (req.method === "GET") {
-    res.status(200).json("That's it.");
+    return res.status(202).json("404 Not found");
   } else if (req.method === "POST") {
     try {
       axios.get(req.body.formData.url).then((info) => {
@@ -21,13 +21,11 @@ export default function handler(req, res) {
             text: $(element).find("p").text() + " ",
           });
         });
-        res
-          .status(200)
-          .json({
-            name: title,
-            image: property === [] ? null : property,
-            details: description === [] ? null : description,
-          });
+        res.status(200).json({
+          name: title,
+          image: property === [] ? null : property,
+          details: description === [] ? null : description,
+        });
       });
     } catch (e) {
       res.status(200).json(e);
