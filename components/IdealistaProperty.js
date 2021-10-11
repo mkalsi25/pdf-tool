@@ -125,6 +125,19 @@ const styles = StyleSheet.create({
     position: "relative",
     top: "1",
   },
+  footerlink: {
+    display: "flex",
+    flexDirection: "row",
+
+    justifyContent: "space-between",
+  },
+  footerdetail: {
+    fontSize: 12,
+    color: "#9D9D9D",
+    fontFamily: "Oswald",
+    textDecoration: "none",
+    padding: "0 20px",
+  },
 });
 
 Font.register({
@@ -220,6 +233,22 @@ const Property = ({ data }) => {
           <Text style={styles.detail}>
             © {Year + " "} The Orchid Group Properties. All rights reserved.
           </Text>
+          <View style={styles.footerlink}>
+            <Link
+              src="www.theorchidgroup.properties"
+              style={styles.footerdetail}
+            >
+              {" "}
+              www.theorchidgroup.properties
+            </Link>
+            <Link
+              src="mailto:info@theorchidgroup.properties"
+              style={styles.footerdetail}
+            >
+              {" "}
+              info@theorchidgroup.properties
+            </Link>
+          </View>
         </View>
       </Page>
     </Document>

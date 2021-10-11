@@ -85,7 +85,7 @@ export default async function handler(req, res) {
       await browser.close();
       return res.status(200).json(content);
     } catch (e) {
-      return res.status(200).json(e);
+      return res.status(204).json(e);
     }
   }
 }

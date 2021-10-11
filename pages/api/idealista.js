@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json(ret);
     } catch (e) {
-      res.status(200).json(e);
+      res.status(204).json(e);
     }
   }
 }
