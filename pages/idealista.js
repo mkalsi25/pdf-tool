@@ -55,7 +55,7 @@ export default function Index() {
         document.getElementById("UpdatedPDF")
       );
       axios.post("/api/idealista", { formData }).then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setLoad((load) => !load);
 
         ReactDOM.render(
