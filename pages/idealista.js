@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
-import Property from "../components/Property";
+import Property from "../components/IdealistaProperty";
 import axios from "axios";
 import Seo from "../components/Seo";
 import Edit from "../components/Edit";
@@ -60,7 +60,7 @@ export default function Index() {
 
         ReactDOM.render(
           <div>
-            <Edit content={res.data} path={"UpdatedPDF"} />
+            {/* <Edit content={res.data} path={"UpdatedPDF"} /> */}
             <PDFViewer style={styles.body}>
               <Property data={res.data} />
             </PDFViewer>
@@ -89,16 +89,16 @@ export default function Index() {
             className="grid grid-cols-2 gap-6 w-11/12  items-center mt-6 max-w-3xl mx-auto"
           >
             <div className="grid gap-2  col-span-2">
-              <label htmlFor="url" className="text-xs">
-                Please Enter URL
+              <label htmlFor="listingID" className="text-xs">
+                Please Enter Listing ID
               </label>
               <input
-                id="url"
-                type="url"
+                id="listingID"
+                type="number"
                 required
-                name="url"
+                name="listing"
                 onChange={handleChange}
-                placeholder="https://"
+                placeholder="123435435"
                 className="px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md"
               />
             </div>
