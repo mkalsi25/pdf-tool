@@ -79,9 +79,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Oswald",
   },
+  wrapImg: {
+    width: "50%",
+  },
   img: {
-    width: "280px",
+    width: "100%",
     height: "156px",
+    objectFit: "cover",
     margin: "5",
   },
   footer: {
@@ -233,20 +237,21 @@ const Property = ({ data }) => {
         <View style={styles.wrapper}>
           {data.images.splice(0, 12).map((img, key) => {
             return (
-              <Image
-                key={key}
-                style={styles.img}
-                // cache={false}
-                // crossOrigin="Anonymous"
-                // allowDangerousPaths={true}
-                src={{
-                  uri: "https://cors-anywhere.herokuapp.com/" + img,
-                  method: "GET",
-                  headers: {
-                    "Cache-Control": "no-cache",
-                  },
-                }}
-              />
+              <View key={key} style={styles.wrapImg}>
+                <Image
+                  style={styles.img}
+                  // cache={false}
+                  // crossOrigin="Anonymous"
+                  // allowDangerousPaths={true}
+                  src={{
+                    uri: "https://cors-anywhere.herokuapp.com/" + img,
+                    method: "GET",
+                    headers: {
+                      "Cache-Control": "no-cache",
+                    },
+                  }}
+                />
+              </View>
             );
           })}
         </View>
