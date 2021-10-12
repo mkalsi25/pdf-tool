@@ -231,7 +231,7 @@ const Property = ({ data }) => {
           <Text style={styles.gallery}>Gallery:</Text>
         </View>
         <View style={styles.wrapper}>
-          {data.images.map((img, key) => {
+          {data.images.splice(0, 12).map((img, key) => {
             return (
               <Image
                 key={key}
@@ -240,9 +240,11 @@ const Property = ({ data }) => {
                 // crossOrigin="Anonymous"
                 // allowDangerousPaths={true}
                 src={{
-                  uri: "https://cors.bridged.cc/" + img,
+                  uri: "https://cors-anywhere.herokuapp.com/" + img,
                   method: "GET",
-                  headers: { "Cache-Control": "no-cache" },
+                  headers: {
+                    "Cache-Control": "no-cache",
+                  },
                 }}
               />
             );
