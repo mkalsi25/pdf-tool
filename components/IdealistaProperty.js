@@ -169,10 +169,12 @@ const Property = ({ data }) => {
             </View>
           </View>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.gallery}> Name: </Text>
-          <Text style={styles.title}>{data.title}</Text>
-        </View>
+        {data.title && (
+          <View style={styles.section}>
+            <Text style={styles.gallery}> Name: </Text>
+            <Text style={styles.title}>{data.title}</Text>
+          </View>
+        )}
         <View style={styles.section}>
           <Text style={styles.gallery}> Description: </Text>
           <Text style={styles.title}>{data.description}</Text>
@@ -195,19 +197,36 @@ const Property = ({ data }) => {
             <Text style={styles.title}>{data.area}</Text>
           </View>
         </View>
-        <View style={styles.wrap}>
-          <Text style={styles.gallery}> Amenities: </Text>
+        {data.Amenities && (
+          <View style={styles.wrap}>
+            <Text style={styles.gallery}> Amenities: </Text>
 
-          <View style={styles.wrapping}>
-            {data.Amenities.map((li, key) => {
-              return (
-                <View style={styles.section2} key={key}>
-                  <Text style={styles.title}>{li}</Text>
-                </View>
-              );
-            })}
+            <View style={styles.wrapping}>
+              {data.Amenities.map((li, key) => {
+                return (
+                  <View style={styles.section2} key={key}>
+                    <Text style={styles.title}>{li}</Text>
+                  </View>
+                );
+              })}
+            </View>
           </View>
-        </View>
+        )}
+        {data.BuildingAmenities && (
+          <View style={styles.wrap}>
+            <Text style={styles.gallery}> Amenities: </Text>
+
+            <View style={styles.wrapping}>
+              {data.BuildingAmenities.map((li, key) => {
+                return (
+                  <View style={styles.section2} key={key}>
+                    <Text style={styles.title}>{li}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        )}
         <View style={styles.section}>
           <Text style={styles.gallery}>Gallery:</Text>
         </View>
