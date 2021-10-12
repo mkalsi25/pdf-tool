@@ -228,10 +228,16 @@ const Property = ({ data }) => {
                 // cache={false}
                 // crossOrigin="Anonymous"
                 // allowDangerousPaths={true}
-                src={{
-                  uri: "https://cors.bridged.cc/" + img.src,
+                source={{
+                  uri:
+                    "https://api.allorigins.win/raw?url=" +
+                    img.src +
+                    "?noCache=" +
+                    Math.random().toString(),
                   method: "GET",
-                  headers: { "Cache-Control": "no-cache" },
+                  // headers: {
+                  //   "Cache-Control": "max-age=0",
+                  // },
                 }}
               />
             );

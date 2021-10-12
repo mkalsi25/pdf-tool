@@ -5,6 +5,7 @@ import Property from "../components/CasafariProperty";
 import axios from "axios";
 import Seo from "../components/Seo";
 import Layout from "../components/Layout";
+import Edit from "../components/CasafariEdit";
 
 export default function Index() {
   const [formData, updateFormData] = useState({});
@@ -56,12 +57,13 @@ export default function Index() {
         document.getElementById("UpdatedPDF")
       );
       axios.post("/api/casafari", { formData }).then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setLoad((load) => !load);
 
         if (res.status === 200) {
           ReactDOM.render(
             <div>
+              <Edit content={res.data} path={"UpdatedPDF"} />
               <PDFViewer style={styles.body}>
                 <Property data={res.data} />
               </PDFViewer>

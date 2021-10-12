@@ -22,6 +22,26 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     padding: "0 10",
   },
+  wrap: {
+    width: "100%",
+    margin: "0 10",
+    marginTop: 5,
+    marginBottom: 5,
+    padding: "0 10",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  wrapping: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  section2: {
+    width: "50%",
+    flexDirection: "column",
+  },
   title: {
     fontWeight: 900,
     fontFamily: "Oswald",
@@ -126,73 +146,9 @@ Font.register({
 });
 
 // Create Document Component
-const Property = ({ data, generate }) => {
-  // console.log(data);
+const Property = ({ data }) => {
+  //   console.log(data);
   const Year = new Date().getFullYear();
-
-  if (generate) {
-    return (
-      <Document>
-        <Page size="LETTER" style={styles.frontpage}>
-          <Image src="/white.jpeg" style={styles.frontlogo} />
-        </Page>
-        <Page size="LETTER" style={styles.page}>
-          <View style={styles.section}>
-            <View style={styles.header}>
-              <Image src="/logo.jpeg" style={styles.logo} />
-              <View style={styles.intro}>
-                <Text style={styles.name}> Kelly Osorio Oviedo</Text>
-                <Text style={styles.detail}> Real Estate Manager</Text>
-                <Text style={styles.detail}> The Orchid Group Properties</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.gallery}> Name: </Text>
-            <Text style={styles.title}>{generate.title}</Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.gallery}> Details: </Text>
-            {generate.description && (
-              <Text style={styles.description}>{generate.description}</Text>
-            )}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.gallery}>Gallery:</Text>
-          </View>
-          <View style={styles.wrapper}>
-            {Array.from(generate.image).map((img, key) => {
-              return (
-                <Image
-                  key={key}
-                  style={styles.img}
-                  cache={false}
-                  allowDangerousPaths={true}
-                  // src={img.src + `?noCache=anonymous`}
-                  src={{
-                    method: "GET",
-                    uri: URL.createObjectURL(img),
-                    // headers: {
-                    //   // "Access-Control-Allow-Origin": "*",
-                    //   Pragma: "no-cache",
-                    //   "Cache-Control": "no-cache",
-                    //   crossOrigin: "anonymous",
-                    // },
-                  }}
-                />
-              );
-            })}
-          </View>
-          <View style={styles.footer}>
-            <Text style={styles.detail}>
-              © {Year + " "} The Orchid Group Properties. All rights reserved.
-            </Text>
-          </View>
-        </Page>
-      </Document>
-    );
-  }
-
   return (
     <Document>
       <Page size="LETTER" style={styles.frontpage}>
@@ -215,13 +171,56 @@ const Property = ({ data, generate }) => {
         </View>
         <View style={styles.section}>
           <Text style={styles.gallery}> Name: </Text>
-          <Text style={styles.title}>{data.name}</Text>
+          <Text style={styles.title}>{data.title}</Text>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.gallery}> Details: </Text>
-          {data.details && (
-            <Text style={styles.description}>{data?.details[0]?.text}</Text>
-          )}
+        {data.description && (
+          <View style={styles.section}>
+            <Text style={styles.gallery}> Description: </Text>
+            <Text style={styles.title}>{data.description}</Text>
+          </View>
+        )}
+        <View style={styles.wrap}>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Price: </Text>
+            <Text style={styles.title}>{data.price}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Beds: </Text>
+            <Text style={styles.title}>{data.beds}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Baths: </Text>
+            <Text style={styles.title}>{data.baths}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Surface: </Text>
+            <Text style={styles.title}>{data.surface}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Plot: </Text>
+            <Text style={styles.title}>{data.plot}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Rooms: </Text>
+            <Text style={styles.title}>{data.rooms}</Text>
+          </View>
+          <View style={styles.section2}>
+            <Text style={styles.gallery}> Sale Status: </Text>
+            <Text style={styles.title}>{data.status}</Text>
+          </View>
+        </View>
+        <View style={styles.wrap}>
+          <Text style={styles.gallery}> Characteristics: </Text>
+
+          <View style={styles.wrapping}>
+            {data.features.map((li, key) => {
+              return (
+                <View style={styles.section2} key={key}>
+                  <Text style={styles.title}>{li}</Text>
+                </View>
+              );
+            })}
+          </View>
         </View>
         <View style={styles.section}>
           <Text style={styles.gallery}>Gallery:</Text>
@@ -232,9 +231,9 @@ const Property = ({ data, generate }) => {
               <Image
                 key={key}
                 style={styles.img}
-                cache={false}
-                allowDangerousPaths={true}
-                // src={img.src + `?noCache=anonymous`}
+                // cache={false}
+                // crossOrigin="Anonymous"
+                // allowDangerousPaths={true}
                 source={{
                   uri:
                     "https://api.allorigins.win/raw?url=" +
@@ -262,6 +261,7 @@ const Property = ({ data, generate }) => {
               {" "}
               www.theorchidgroup.properties
             </Link>
+
             <Link
               src="mailto:info@theorchidgroup.properties"
               style={styles.footerdetail}
