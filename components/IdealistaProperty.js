@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
     fontFamily: "Oswald",
   },
   wrapImg: {
-    width: "50%",
+    width: "45%",
+    margin: "5",
   },
   img: {
     width: "100%",
     height: "156px",
     objectFit: "cover",
-    margin: "5",
   },
   footer: {
     position: "absolute",
@@ -243,12 +243,16 @@ const Property = ({ data }) => {
                   // cache={false}
                   // crossOrigin="Anonymous"
                   // allowDangerousPaths={true}
-                  src={{
-                    uri: "https://cors-anywhere.herokuapp.com/" + img,
+                  source={{
+                    uri:
+                      "https://api.allorigins.win/raw?url=" +
+                      img +
+                      "?noCache=" +
+                      Math.random().toString(),
                     method: "GET",
-                    headers: {
-                      "Cache-Control": "no-cache",
-                    },
+                    // headers: {
+                    //   "Cache-Control": "max-age=0",
+                    // },
                   }}
                 />
               </View>
