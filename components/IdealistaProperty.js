@@ -235,7 +235,7 @@ const Property = ({ data }) => {
           <Text style={styles.gallery}>Gallery:</Text>
         </View>
         <View style={styles.wrapper}>
-          {data.images.splice(0, 12).map((img, key) => {
+          {data.images.map((img, key) => {
             return (
               <View key={key} style={styles.wrapImg}>
                 <Image
