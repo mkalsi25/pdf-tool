@@ -61,7 +61,7 @@ export default function Edit({ content, path }) {
       document.getElementById(path)
     );
     axios.patch("/api", { data }).then((res) => {
-      console.log(res.data);
+      //   console.log(res.data);
       DOM.render(
         <div>
           {/* <Edit content={res.data} /> */}

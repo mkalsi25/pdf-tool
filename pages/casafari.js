@@ -57,7 +57,7 @@ export default function Index() {
         document.getElementById("UpdatedPDF")
       );
       axios.post("/api/casafari", { formData }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setLoad((load) => !load);
 
         if (res.status === 200) {
