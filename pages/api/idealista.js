@@ -50,5 +50,7 @@ export default async function handler(req, res) {
     } catch (e) {
       res.status(204).json(e);
     }
+  } else if (req.method === "PATCH") {
+    res.status(200).json(req.body.data);
   }
 }

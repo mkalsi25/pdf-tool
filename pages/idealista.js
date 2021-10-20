@@ -4,7 +4,7 @@ import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/IdealistaProperty";
 import axios from "axios";
 import Seo from "../components/Seo";
-import Edit from "../components/Edit";
+import Edit from "../components/IndealistaEdit";
 import Layout from "../components/Layout";
 
 export default function Index() {
@@ -62,7 +62,7 @@ export default function Index() {
         if (res.status === 200) {
           ReactDOM.render(
             <div>
-              {/* <Edit content={res.data} path={"UpdatedPDF"} /> */}
+              <Edit content={res.data} path={"UpdatedPDF"} />
               <PDFViewer style={styles.body}>
                 <Property data={res.data} />
               </PDFViewer>
