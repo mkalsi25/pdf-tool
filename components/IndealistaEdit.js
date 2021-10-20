@@ -18,8 +18,6 @@ export default function Edit({ content, path }) {
     },
   });
 
-  const DOM = ReactDOM;
-
   const {
     register,
     handleSubmit,
@@ -61,8 +59,8 @@ export default function Edit({ content, path }) {
       document.getElementById(path)
     );
     axios.patch("/api/idealista", { data }).then((res) => {
-      console.log(res.data);
-      DOM.render(
+      //   console.log(res.data);
+      ReactDOM.render(
         <div>
           {/* <Edit content={res.data} /> */}
           <PDFViewer style={styles.body}>
