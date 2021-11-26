@@ -9,11 +9,18 @@ export default async function handler(req, res) {
       const url = `https://www.idealista.com/en/inmueble/${req.body.formData.listing}/`;
       const { data } = await axios.get(url, {
         headers: {
-          Accept: "*/*",
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
           "Accept-Encoding": "gzip, deflate, br",
+          "Accept-Language": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7,pa;q=0.6",
           "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36",
           Referer: url,
+          "Cache-Control": "max-age=0",
+          path: `/en/inmuenle/${req.body.formData.listing}`,
+          scheme: "https",
+          method: "GET",
+          authority: "www.idealista.com",
         },
       });
 
@@ -48,7 +55,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json(ret);
     } catch (e) {
-      res.status(204).json(e);
+      res.status(204).json({ message: "Not Working" });
     }
   } else if (req.method === "PATCH") {
     res.status(200).json(req.body.data);

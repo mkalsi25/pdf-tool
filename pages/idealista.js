@@ -57,6 +57,7 @@ export default function Index() {
       );
       axios.post("/api/idealista", { formData }).then((res) => {
         // console.log(res);
+        console.log(res);
         setLoad((load) => !load);
 
         if (res.status === 200) {

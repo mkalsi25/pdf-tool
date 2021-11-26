@@ -234,31 +234,33 @@ const Property = ({ data }) => {
         <View style={styles.section}>
           <Text style={styles.gallery}>Gallery:</Text>
         </View>
-        <View style={styles.wrapper}>
-          {data.images.map((img, key) => {
-            return (
-              <View key={key} style={styles.wrapImg}>
-                <Image
-                  style={styles.img}
-                  // cache={false}
-                  // crossOrigin="Anonymous"
-                  // allowDangerousPaths={true}
-                  source={{
-                    uri:
-                      "https://api.allorigins.win/raw?url=" +
-                      img +
-                      "?noCache=" +
-                      Math.random().toString(),
-                    method: "GET",
-                    // headers: {
-                    //   "Cache-Control": "max-age=0",
-                    // },
-                  }}
-                />
-              </View>
-            );
-          })}
-        </View>
+        {data.images && (
+          <View style={styles.wrapper}>
+            {data.images.map((img, key) => {
+              return (
+                <View key={key} style={styles.wrapImg}>
+                  <Image
+                    style={styles.img}
+                    // cache={false}
+                    // crossOrigin="Anonymous"
+                    // allowDangerousPaths={true}
+                    source={{
+                      uri:
+                        "https://api.allorigins.win/raw?url=" +
+                        img +
+                        "?noCache=" +
+                        Math.random().toString(),
+                      method: "GET",
+                      // headers: {
+                      //   "Cache-Control": "max-age=0",
+                      // },
+                    }}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        )}
         <View style={styles.footer}>
           <Text style={styles.detail}>
             © {Year + " "} The Orchid Group Properties. All rights reserved.
