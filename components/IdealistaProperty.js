@@ -201,21 +201,7 @@ const Property = ({ data }) => {
             <Text style={styles.title}>{data.area}</Text>
           </View>
         </View>
-        {data["Basic features"] && (
-          <View style={styles.wrap}>
-            <Text style={styles.gallery}> Basic Features: </Text>
 
-            <View style={styles.wrapping}>
-              {data["Basic features"].map((li, key) => {
-                return (
-                  <View style={styles.section2} key={key}>
-                    <Text style={styles.title}>{li}</Text>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-        )}
         {data.Amenities && (
           <View style={styles.wrap}>
             <Text style={styles.gallery}> Amenities: </Text>
@@ -252,6 +238,21 @@ const Property = ({ data }) => {
 
             <View style={styles.wrapping}>
               {data.BuildingAmenities.map((li, key) => {
+                return (
+                  <View style={styles.section2} key={key}>
+                    <Text style={styles.title}>{li}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        )}
+        {data["Basic features"] && (
+          <View style={styles.wrap}>
+            <Text style={styles.gallery}> Basic Features: </Text>
+
+            <View style={styles.wrapping}>
+              {data["Basic features"].map((li, key) => {
                 return (
                   <View style={styles.section2} key={key}>
                     <Text style={styles.title}>{li}</Text>
