@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
 import Layout from "../components/Layout";
-
-// import axios from "axios";
 import Seo from "../components/Seo";
-// import Edit from "../components/Edit";
 export default function Generate() {
-  //   const [formData, updateFormData] = useState({});
   const [load, setLoad] = useState(false);
 
   const {
@@ -32,9 +28,8 @@ export default function Generate() {
       setLoad((load) => !load);
       e.preventDefault();
 
-      ReactDOM.render(
+      render(
         <div>
-          {/* <Edit content={res.data} path="UpdatedPDF" /> */}
           <PDFViewer style={styles.body}>
             <Property generate={data} />
           </PDFViewer>
@@ -107,7 +102,7 @@ export default function Generate() {
                 type="submit"
                 className="px-8 py-2 rounded w-full bg-black text-white outline-none focus:outline flex items-center space-x-2"
               >
-                <span>Generate Now!</span>
+                <span>Submit</span>
                 {load && (
                   <svg
                     className="animate-spin h-4 w-4 text-white"

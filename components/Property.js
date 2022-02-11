@@ -105,6 +105,16 @@ const styles = StyleSheet.create({
     position: "relative",
     top: "1",
   },
+  wrap: {
+    width: "100%",
+    margin: "0 10",
+    marginTop: 5,
+    marginBottom: 5,
+    padding: "0 10",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   footerlink: {
     display: "flex",
     flexDirection: "row",
@@ -118,6 +128,20 @@ const styles = StyleSheet.create({
     textDecoration: "none",
     padding: "0 20px",
   },
+  wrapping: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  section2: {
+    width: "50%",
+    flexDirection: "column",
+  },
+  section3: {
+    width: "100%",
+    flexDirection: "column",
+  },
 });
 
 Font.register({
@@ -127,19 +151,17 @@ Font.register({
 
 // Create Document Component
 const Property = ({ data, generate }) => {
-  // console.log(data);
   const Year = new Date().getFullYear();
-
   if (generate) {
     return (
       <Document>
         <Page size="LETTER" style={styles.frontpage}>
-          <Image src="/white.jpeg" style={styles.frontlogo} />
+          <Image src="/white.jpeg" style={styles.frontlogo} alt={`img-logo`} />
         </Page>
         <Page size="LETTER" style={styles.page}>
           <View style={styles.section}>
             <View style={styles.header}>
-              <Image src="/logo.jpeg" style={styles.logo} />
+              <Image src="/logo.jpeg" style={styles.logo} alt={`img-logo`} />
               <View style={styles.intro}>
                 <Text style={styles.name}> Kelly Osorio Oviedo</Text>
                 <Text style={styles.detail}> Real Estate Manager</Text>
@@ -165,19 +187,13 @@ const Property = ({ data, generate }) => {
               return (
                 <Image
                   key={key}
+                  alt={`img-${key}`}
                   style={styles.img}
                   cache={false}
                   allowDangerousPaths={true}
-                  // src={img.src + `?noCache=anonymous`}
                   src={{
                     method: "GET",
                     uri: URL.createObjectURL(img),
-                    // headers: {
-                    //   // "Access-Control-Allow-Origin": "*",
-                    //   Pragma: "no-cache",
-                    //   "Cache-Control": "no-cache",
-                    //   crossOrigin: "anonymous",
-                    // },
                   }}
                 />
               );
@@ -192,16 +208,15 @@ const Property = ({ data, generate }) => {
       </Document>
     );
   }
-
   return (
     <Document>
       <Page size="LETTER" style={styles.frontpage}>
-        <Image src="/white.jpeg" style={styles.frontlogo} />
+        <Image src="/white.jpeg" style={styles.frontlogo} alt="logo" />
       </Page>
       <Page size="LETTER" style={styles.page}>
         <View style={styles.section}>
           <View style={styles.header}>
-            <Image src="/logo.jpeg" style={styles.logo} />
+            <Image src="/logo.jpeg" style={styles.logo} alt="logo" />
             <View style={styles.intro}>
               <Text style={styles.name}> Kelly Osorio Oviedo</Text>
               <Text style={styles.detail}> Real Estate Manager</Text>
@@ -218,11 +233,95 @@ const Property = ({ data, generate }) => {
           <Text style={styles.title}>{data.name}</Text>
         </View>
         <View style={styles.section}>
-          <Text style={styles.gallery}> Details: </Text>
           {data.details && (
-            <Text style={styles.description}>{data?.details[0]?.text}</Text>
+            <>
+              <Text style={styles.gallery}> Details: </Text>
+              <Text style={styles.description}>{data.details}</Text>
+            </>
           )}
         </View>
+
+        <View style={styles.wrap}>
+          {data.price && (
+            <View style={styles.section2}>
+              <Text style={styles.gallery}> Price: </Text>
+              <Text style={styles.title}>{data.price}</Text>
+            </View>
+          )}
+          {data.location && (
+            <View style={styles.section2}>
+              <Text style={styles.gallery}> Location: </Text>
+              <Text style={styles.title}>{data.location}</Text>
+            </View>
+          )}
+          {data.beds && (
+            <View style={styles.section2}>
+              <Text style={styles.gallery}> Beds: </Text>
+              <Text style={styles.title}>{data.beds}</Text>
+            </View>
+          )}
+          {data.area && (
+            <View style={styles.section2}>
+              <Text style={styles.gallery}> Area: </Text>
+              <Text style={styles.title}>{data.area}</Text>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.wrap}>
+          {data["AmenitiesCertificado energético"] && (
+            <View style={styles.section3}>
+              <Text style={styles.gallery}> Amenities: </Text>
+
+              <View style={styles.wrapping}>
+                {data["AmenitiesCertificado energético"].map((li, key) => {
+                  return (
+                    <View style={styles.section2} key={key}>
+                      <Text style={styles.title}>{li}</Text>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.wrap}>
+          {data.BuildingAmenities && (
+            <View style={styles.section3}>
+              <Text style={styles.gallery}> Amenities: </Text>
+
+              <View style={styles.wrapping}>
+                {data.BuildingAmenities.map((li, key) => {
+                  return (
+                    <View style={styles.section2} key={key}>
+                      <Text style={styles.title}>{li}</Text>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.wrap}>
+          {data["Basic features"] && (
+            <View style={styles.section3}>
+              <Text style={styles.gallery}> Basic Features: </Text>
+
+              <View style={styles.wrapping}>
+                {data["Basic features"].map((li, key) => {
+                  return (
+                    <View style={styles.section2} key={key}>
+                      <Text style={styles.title}>{li}</Text>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          )}
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.gallery}>Gallery:</Text>
         </View>
@@ -230,6 +329,7 @@ const Property = ({ data, generate }) => {
           {data.image.map((img, key) => {
             return (
               <Image
+                alt={`img-${key}`}
                 key={key}
                 style={styles.img}
                 cache={false}
@@ -238,7 +338,7 @@ const Property = ({ data, generate }) => {
                 source={{
                   uri:
                     "https://api.allorigins.win/raw?url=" +
-                    img.src +
+                    img +
                     "?noCache=" +
                     Math.random().toString(),
                   method: "GET",

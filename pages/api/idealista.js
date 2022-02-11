@@ -39,16 +39,16 @@ export default async function handler(req, res) {
     return res.status(202).json("404 Not found");
   } else if (req.method === "POST") {
     try {
-      const url = `https://www.idealista.com/en/inmueble/${req.body.formData.listing}/`;
+      const url = `https://www.idealista.com/en/inmueble/${req.body.id}/`;
       const { data } = await axios.get(url, { headers: sample(headers) });
 
       const $ = cheerio.load(data);
       var ret = { url };
 
-      ret.title = $(".main-info__title-main").text();
+      ret.name = $("h1 .main-info__title-main").text();
       ret.location = $(".main-info__title-minor").text();
       ret.price = $(".info-data-price").text();
-      ret.description = $(".commentsContainer .comment").text().trim();
+      ret.details = $(".commentsContainer .comment").text().trim();
       var [area, beds] = $(".info-features > span").map((idx, el) =>
         $(el).text().trim().replace("\n", "")
       );
@@ -69,13 +69,17 @@ export default async function handler(req, res) {
         images = [...images, match[1]];
         match = regex.exec(data);
       }
-      ret.images = images;
+      ret.image = images;
 
       return res.status(200).json(ret);
     } catch (e) {
-      res.status(204).json({ message: "Not Working" });
+      res.status(404).json({ message: "Not Working" });
     }
   } else if (req.method === "PATCH") {
-    res.status(200).json(req.body.data);
+    try {
+      res.status(200).json(req.body);
+    } catch (e) {
+      res.status(404).json(e);
+    }
   }
 }

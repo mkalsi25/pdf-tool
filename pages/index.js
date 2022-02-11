@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect } from "react";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
-import axios from "axios";
 import Seo from "../components/Seo";
 import Edit from "../components/Edit";
 import Layout from "../components/Layout";
+import { useForm } from "react-hook-form";
+import { useEditPDF, useGeneratePDF } from "../lib/queries";
+import { render } from "react-dom";
 export default function Index() {
-  const [formData, updateFormData] = useState({});
-  const [load, setLoad] = useState(false);
-  const [err, setErr] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // control,
+  } = useForm({
+    defaultValues: {},
+  });
 
   const styles = StyleSheet.create({
     body: {
@@ -17,66 +23,44 @@ export default function Index() {
       height: "100vh",
     },
   });
-  // us
-  const handleChange = (e) => {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+
+  const {
+    mutate,
+    isError,
+    isLoading,
+    error,
+    data: output,
+  } = useGeneratePDF("/api");
+
+  const onSubmit = (data) => {
+    mutate(data);
   };
 
-  const handleSubmit = (e) => {
-    try {
-      setLoad((load) => !load);
-      e.preventDefault();
-      ReactDOM.render(
-        <div className="flex items-center justify-center ">
-          {/* <Edit content={res.data} path="UpdatedPDF" /> */}
+  const {
+    mutate: update,
+    isLoading: Loading,
+    data: collect,
+  } = useEditPDF("/api");
 
-          <svg
-            className="animate-spin h-24 w-24 text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
+  const onUpdate = (data) => {
+    update(data);
+  };
+
+  useEffect(() => {
+    if (collect) {
+      render(
+        <div>
+          <PDFViewer style={styles.body}>
+            <Property data={collect} />
+          </PDFViewer>
         </div>,
-        document.getElementById("UpdatedPDF")
+        document.getElementById("PDF")
       );
-      axios.post("/api", { formData }).then((res) => {
-        // console.log(res.data);
-        setLoad((load) => !load);
-        if (res.status === 200) {
-          ReactDOM.render(
-            <div>
-              <Edit content={res.data} path="UpdatedPDF" />
-              <PDFViewer style={styles.body}>
-                <Property data={res.data} />
-              </PDFViewer>
-            </div>,
-            document.getElementById("UpdatedPDF")
-          );
-        } else {
-          setErr((err) => !err);
-        }
-      });
-    } catch (e) {
-      console.log(e + "Errror");
+      // console.log("results", collect);
     }
-  };
+  }, [collect, styles]);
+
+  // console.log(output);
 
   return (
     <Layout>
@@ -84,13 +68,13 @@ export default function Index() {
         title="PDF Generator"
         description="A PDF generator from data of web scraping. It's based on property belongs to Ibiza."
       />
-      <div className="h-screen flex items-center justify-center">
+      <div className="h-auto py-12">
         <div>
           <h1 className="text-4xl md:text-7xl font-bold text-center max-w-3xl mx-auto">
             PDF Generator Tool for Kyero.
           </h1>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-2 gap-6 w-11/12  items-center mt-6 max-w-3xl mx-auto"
           >
             <div className="grid gap-2  col-span-2">
@@ -99,19 +83,30 @@ export default function Index() {
               </label>
               <input
                 id="url"
-                type="url"
-                required
-                name="url"
-                onChange={handleChange}
+                type="text"
+                {...register("url", {
+                  required: true,
+                  pattern: {
+                    value: `/(?<=^|\s)https://www.kyero.com(?=\s|$)/i`,
+                    message: "Incorrect URL",
+                  },
+                })}
                 placeholder="https://"
-                className="px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md"
+                className={`px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md border ${
+                  errors["url"] ? "border-red-500" : "border-gray-100"
+                }`}
               />
-              {err && (
-                <div className="flex items-center justify-between bg-red-600 px-6 py-3 rounded-xl text-white">
+              {errors["url"] && (
+                <span className="text-xs text-red-600 font-bold">
+                  URL is required!
+                </span>
+              )}
+              {isError && (
+                <div className=" flex items-center justify-between bg-red-100 px-6 py-3 rounded text-white fixed top-0 right-0 mt-3 mr-3">
                   <span className="flex items-center space-x-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
+                      className="h-5 w-5 text-red-600"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -121,25 +116,10 @@ export default function Index() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>Wrong Entry</span>
+                    <span className="text-xs text-red-600 font-bold">
+                      {error.message}
+                    </span>
                   </span>
-                  <button
-                    onClick={() => setErr((err) => !err)}
-                    className="px-4 py-2 text-white"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
                 </div>
               )}
             </div>
@@ -149,8 +129,8 @@ export default function Index() {
                 type="submit"
                 className="px-8 py-2 rounded w-full bg-black text-white outline-none focus:outline flex items-center space-x-2"
               >
-                <span>Generate Now!</span>
-                {load && (
+                <span>Submit!</span>
+                {isLoading && (
                   <svg
                     className="animate-spin h-4 w-4 text-white"
                     xmlns="http://www.w3.org/2000/svg"
@@ -180,14 +160,49 @@ export default function Index() {
 
       <div className="grid gap-6">
         <div>
-          <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
-            <div id="UpdatedPDF" />
-          </div>
-        </div>
-        <div>
-          <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
-            <div id="PDF" />
-          </div>
+          {output && (
+            <div>
+              <Edit isLoading={Loading} update={onUpdate} content={output} />
+            </div>
+          )}
+
+          {Loading ? (
+            <div className="flex items-center justify-center ">
+              <svg
+                className="animate-spin h-24 w-24 text-black"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </div>
+          ) : (
+            <div className="w-11/12 mx-auto rounded-2xl overflow-hidden">
+              <div className="py-6 text-center">
+                <h3
+                  className="text-xs
+                uppercase tracking-widest text-stone-400"
+                >
+                  <strong>NOTE:</strong> Please wait. Sometime it takes too much
+                  time to load PDF
+                </h3>
+              </div>
+              <div id="PDF" />
+            </div>
+          )}
         </div>
       </div>
     </Layout>
