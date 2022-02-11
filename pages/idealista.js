@@ -86,8 +86,15 @@ export default function Index() {
                 name="listing"
                 {...register("id", { required: true })}
                 placeholder="123435435"
-                className="px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md"
+                className={`px-4 py-2 outline-none focus:outline-none rounded bg-white w-full filter drop-shadow-md border ${
+                  errors["id"] ? "border-red-500" : "border-gray-100"
+                }`}
               />
+              {errors["id"] && (
+                <span className="text-xs text-red-600 font-bold">
+                  Listing ID is required!
+                </span>
+              )}
               {isError && (
                 <div className=" flex items-center justify-between bg-red-100 px-6 py-3 rounded text-white fixed top-0 right-0 mt-3 mr-3">
                   <span className="flex items-center space-x-4">
