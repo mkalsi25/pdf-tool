@@ -41,7 +41,6 @@ export default function Index() {
 
   const onSubmit = (data) => {
     mutate(data);
-    setStep(1);
   };
 
   useEffect(() => {
