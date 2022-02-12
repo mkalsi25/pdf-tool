@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { render } from "react-dom";
-import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
@@ -25,23 +25,35 @@ export default function Generate() {
     },
   });
 
-  const Submit = (data, e) => {
-    try {
-      setLoad((load) => !load);
-      e.preventDefault();
-
-      render(
+  const Submit = (data) => {
+    setLoad((load) => !load);
+    const fileName = (Math.random() + 1).toString(36).substring(7);
+    render(
+      <div className="grid gap-4">
+        <div className="flex justify-center">
+          <PDFDownloadLink
+            document={<Property generate={data} />}
+            fileName={`${fileName}.pdf`}
+            className="px-8 py-3 rounded-lg bg-black text-white uppercase text-xs tracking-xl"
+          >
+            {({ loading }) =>
+              loading ? (
+                <Loader className={"h-4 w-4 text-white"} />
+              ) : (
+                "Download now!"
+              )
+            }
+          </PDFDownloadLink>
+        </div>
         <div>
           <PDFViewer style={styles.body}>
             <Property generate={data} />
           </PDFViewer>
-        </div>,
-        document.getElementById("PDF")
-      );
-      setLoad((load) => !load);
-    } catch (e) {
-      console.log(e + "Error");
-    }
+        </div>
+      </div>,
+      document.getElementById("PDF")
+    );
+    setLoad((load) => !load);
   };
 
   return (
