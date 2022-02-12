@@ -39,6 +39,7 @@ export default async function handler(req, res) {
     return res.status(202).json("404 Not found");
   } else if (req.method === "POST") {
     try {
+      // console.log(req.body);
       const url = `https://www.idealista.com/en/inmueble/${req.body.id}/`;
       const { data } = await axios.get(url, { headers: sample(headers) });
 
