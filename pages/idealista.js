@@ -69,7 +69,7 @@ export default function Index() {
         </div>,
         document.getElementById("PDF")
       );
-      console.log("results", collect);
+      // console.log("results", collect);
     }
   }, [collect, styles]);
   // console.log("collect", collect);
