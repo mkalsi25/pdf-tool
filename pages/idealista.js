@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { render } from "react-dom";
-import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import Property from "../components/Property";
 import Seo from "../components/Seo";
 import Edit from "../components/Edit";
@@ -58,20 +58,37 @@ export default function Index() {
     update(data);
     setStep(2);
   };
-
+  const fileName = (Math.random() + 1).toString(36).substring(7);
   useEffect(() => {
     if (collect) {
       render(
-        <div>
-          <PDFViewer style={styles.body}>
-            <Property data={collect} />
-          </PDFViewer>
+        <div className="grid gap-4">
+          <div className="flex justify-center">
+            <PDFDownloadLink
+              document={<Property data={collect} />}
+              fileName={`${fileName}.pdf`}
+              className="px-8 py-3 rounded-lg bg-black text-white uppercase text-xs tracking-xl"
+            >
+              {({ loading }) =>
+                loading ? (
+                  <Loader className={"h-4 w-4 text-white"} />
+                ) : (
+                  "Download now!"
+                )
+              }
+            </PDFDownloadLink>
+          </div>
+          <div>
+            <PDFViewer style={styles.body}>
+              <Property data={collect} />
+            </PDFViewer>
+          </div>
         </div>,
         document.getElementById("PDF")
       );
       // console.log("results", collect);
     }
-  }, [collect, styles]);
+  }, [collect, styles, fileName]);
   // console.log("collect", collect);
   return (
     <Layout>
