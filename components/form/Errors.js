@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Errors({ error }) {
   return (
-    <div className=" flex items-center justify-between bg-red-100 px-6 py-3 rounded text-white fixed top-0 right-0 mt-3 mr-3">
+    <div className=" flex items-center justify-between bg-red-100 px-6 py-3 rounded text-white fixed top-0 right-0 mt-12 mr-3">
       <span className="flex items-center space-x-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
