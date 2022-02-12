@@ -32,7 +32,7 @@ export default function Layout({ children }) {
         </nav>
       </header>
       <main className="min-h-screen">{children}</main>
-      <footer className="relative -bottom-6 w-full">
+      <footer>
         <div className="bg-black p-6 mt-24 text-center uppercase text-xs tracking-[0.2em] text-white">
           <strong>Tool Developed by: Danny Waite & Team.</strong>
         </div>

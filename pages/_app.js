@@ -4,7 +4,7 @@ function MyApp({ Component, pageProps }) {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </QueryClientProvider>
   );
 }

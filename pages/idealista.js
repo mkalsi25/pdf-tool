@@ -82,7 +82,7 @@ export default function Index() {
       <Progress step={step} setStep={setStep} />
       <div className="h-auto py-12">
         <div className="relative max-w-3xl mx-auto w-11/12">
-          <div className="w-full h-full space-y-12 mt-6 absolute">
+          <div className="w-full h-full space-y-12 mt-6">
             <Transition
               as="form"
               show={step === 0 ? true : false}
@@ -120,7 +120,7 @@ export default function Index() {
               leave="transition ease-in-out duration-300"
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-full"
-              className="absolute w-full"
+              className=" w-full"
             >
               <div>
                 {isLoading ? (
